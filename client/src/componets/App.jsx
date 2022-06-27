@@ -4,6 +4,7 @@ import './App.css';
 import Header from './Header';
 import Login from './Login';
 import Register from './Register';
+import Managment from './Managment';
 
 const App = () => {
   const [isLogin, setLogin] = useState(false);
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/managment' element={<Managment />} />
       </Routes>
     </div>
   );

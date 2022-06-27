@@ -9,9 +9,10 @@ const Header = ({ isLogin }) => {
   const navigate = useNavigate();
 
   const navToMain = () => navigate('/main');
-  const navToOptions = () => navigate('/options');
+  const navToManagment = () => navigate('/managment');
   const navToRegister = () => navigate('/register');
   const navToLogin = () => navigate('/login');
+  const navToBestScore = () => navigate('/best-score');
 
   return (
     <header className='header'>
@@ -20,8 +21,11 @@ const Header = ({ isLogin }) => {
         <span className='header__nav' onClick={navToMain}>
           Главная
         </span>
-        <span className='header__nav' onClick={navToOptions}>
+        <span className='header__nav' onClick={navToManagment}>
           Управление
+        </span>
+        <span className='header__nav' onClick={navToBestScore}>
+          Таблица
         </span>
       </nav>
       <button

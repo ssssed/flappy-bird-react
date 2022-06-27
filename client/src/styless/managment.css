@@ -1,0 +1,13 @@
+.managment {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.managment__title {
+  text-align: center;
+  text-decoration: none;
+}
+
+.managment__list {
+  list-style: none;
+}
