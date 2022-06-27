@@ -1,0 +1,41 @@
+.form {
+  margin: 10% auto 0;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form__title {
+  color: white;
+  text-align: center;
+}
+
+.form__input {
+  height: 25px;
+  background-color: black;
+  color: white;
+  padding: 0 0 10px;
+  border: 0;
+  border-bottom: 1px solid white;
+}
+
+.form__submit {
+  margin: 50px 0 0;
+  height: 50px;
+  cursor: pointer;
+}
+
+.form__text {
+  color: white;
+}
+
+.form__link {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+}
+
+.login {
+  background-color: black;
+}
