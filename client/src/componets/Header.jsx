@@ -3,22 +3,26 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import '../styless/header.css';
 import logo from '../images/bird.png';
 
-const Header = ({ isLogin }) => {
+const Header = ({ isLogin, handleLogout }) => {
   const location = useLocation();
 
   const navigate = useNavigate();
 
-  const navToMain = () => navigate('/main');
+  const navToMain = () => navigate('/');
   const navToManagment = () => navigate('/managment');
   const navToRegister = () => navigate('/register');
   const navToLogin = () => navigate('/login');
   const navToBestScore = () => navigate('/best-score');
+  const navToProfile = () => navigate('/profile');
 
   return (
     <header className='header'>
       <nav className='header__navs'>
         <img src={logo} alt='logo' className='header__img' />
-        <span className='header__nav' onClick={navToMain}>
+        <span
+          className='header__nav'
+          onClick={isLogin ? navToMain : navToLogin}
+        >
           Начать играть
         </span>
         <span className='header__nav' onClick={navToManagment}>
@@ -27,10 +31,22 @@ const Header = ({ isLogin }) => {
         <span className='header__nav' onClick={navToBestScore}>
           Таблица
         </span>
+        <span
+          className='header__nav'
+          onClick={isLogin ? navToProfile : navToLogin}
+        >
+          Профиль
+        </span>
       </nav>
       <button
         className='header__button'
-        onClick={location.pathname == '/login' ? navToRegister : navToLogin}
+        onClick={
+          isLogin
+            ? handleLogout
+            : location.pathname == '/login'
+            ? navToRegister
+            : navToLogin
+        }
       >
         {isLogin
           ? 'Выйти'

@@ -12,6 +12,7 @@ const Register = () => {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
+    localStorage.setItem('login', login.split('@')[0]);
     register(login, password).then((res) => navigate('/login'));
   };
 

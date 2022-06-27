@@ -14,7 +14,9 @@ const Login = () => {
     e.preventDefault();
     singin(login, password).then((res) => {
       localStorage.setItem('token', res.data.token);
-      navigate('/main');
+      localStorage.setItem('login', login.split('@')[0]);
+      setLogin(true);
+      navigate('/');
     });
   };
 

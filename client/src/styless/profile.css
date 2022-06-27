@@ -1,0 +1,24 @@
+.profile {
+  color: white;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.profile__scores {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.profile__score {
+  list-style: none;
+}
+
+.profile__logout {
+  margin: 40px 0 0;
+  padding: 15px;
+  color: white;
+  background-color: black;
+  border: 1px solid white;
+  cursor: pointer;
+}
