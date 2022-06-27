@@ -19,7 +19,7 @@ const Header = ({ isLogin }) => {
       <nav className='header__navs'>
         <img src={logo} alt='logo' className='header__img' />
         <span className='header__nav' onClick={navToMain}>
-          Главная
+          Начать играть
         </span>
         <span className='header__nav' onClick={navToManagment}>
           Управление

@@ -1,13 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../styless/login.css';
+import { singin } from '../utils/Auth';
 
 const Login = () => {
+  const [login, setLogin] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const handleLoginChange = (e) => setLogin(e.target.value);
+  const handlePasswordChange = (e) => setPassword(e.target.value);
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+    singin(login, password).then((res) => {
+      localStorage.setItem('token', res.data.token);
+      navigate('/main');
+    });
+  };
+
   return (
     <div className='login'>
-      <form className='form'>
+      <form className='form' onSubmit={handleSubmitForm}>
         <h2 className='form__title'>Вход</h2>
-        <input type='text' placeholder='Логин' className='form__input' />
-        <input type='password' placeholder='Пароль' className='form__input' />
+        <input
+          type='text'
+          onChange={handleLoginChange}
+          value={login}
+          placeholder='Логин'
+          className='form__input'
+        />
+        <input
+          type='password'
+          onChange={handlePasswordChange}
+          value={password}
+          placeholder='Пароль'
+          className='form__input'
+        />
         <button type='submit' className='form__submit'>
           Войти
         </button>
