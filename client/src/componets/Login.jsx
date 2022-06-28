@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/userContext';
 import '../styless/login.css';
 import { singin } from '../utils/Auth';
 
@@ -7,6 +8,7 @@ const Login = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const currentUser = useContext(UserContext);
   const handleLoginChange = (e) => setLogin(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
@@ -15,6 +17,7 @@ const Login = () => {
     singin(login, password).then((res) => {
       localStorage.setItem('token', res.data.token);
       localStorage.setItem('login', login.split('@')[0]);
+      localStorage.setItem('userId', res.data.userId);
       setLogin(true);
       navigate('/');
     });

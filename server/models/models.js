@@ -10,9 +10,8 @@ const User = sequelize.define('user', {
 
 const UserInfo = sequelize.define('user_info', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-  title: { type: DataTypes.STRING, allowNull: false },
-  decriptin: { type: DataTypes.STRING, allowNull: false },
-  avatar: { type: DataTypes.STRING, allowNull: false },
+  name: { type: DataTypes.STRING, allowNull: false },
+  scores: { type: DataTypes.ARRAY(DataTypes.INTEGER), allowNull: false },
 });
 
 User.hasOne(UserInfo);

@@ -10,9 +10,12 @@ import ScoreTable from './ScoreTable';
 import Main from './Main';
 import ProtectRouter from '../hoc/ProtectRouter';
 import Profile from './Profile';
+import { UserContext } from '../context/userContext';
 
 const App = () => {
   const [isLogin, setLogin] = useState(false);
+  const [userId, setUserId] = useState(NaN);
+  const [currentUser, setCurrentUser] = useState({});
   const login = localStorage.getItem('login') || 'Player';
   const navigate = useNavigate();
   const storageToken = localStorage.getItem('token');
@@ -28,33 +31,36 @@ const App = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('login');
+    localStorage.removeItem('userId');
     setLogin(false);
     navigate('/login');
   };
   return (
-    <div className='page'>
-      <Header isLogin={isLogin} handleLogout={handleLogout} />
-      <Routes>
-        <Route
-          exact
-          path='/'
-          element={<ProtectRouter isLogin={isLogin} children={<Main />} />}
-        />
-        <Route
-          path='/profile'
-          element={
-            <ProtectRouter
-              isLogin={isLogin}
-              children={<Profile login={login} handleLogout={handleLogout} />}
-            />
-          }
-        />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
-        <Route path='/managment' element={<Managment />} />
-        <Route path='/best-score' element={<ScoreTable />} />
-      </Routes>
-    </div>
+    <UserContext.Provider value={currentUser}>
+      <div className='page'>
+        <Header isLogin={isLogin} userId={userId} handleLogout={handleLogout} />
+        <Routes>
+          <Route
+            exact
+            path='/'
+            element={<ProtectRouter isLogin={isLogin} children={<Main />} />}
+          />
+          <Route
+            path='/profile/:id'
+            element={
+              <ProtectRouter
+                isLogin={isLogin}
+                children={<Profile login={login} handleLogout={handleLogout} />}
+              />
+            }
+          />
+          <Route path='/login' element={<Login setUserId={setUserId} />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/managment' element={<Managment />} />
+          <Route path='/best-score' element={<ScoreTable />} />
+        </Routes>
+      </div>
+    </UserContext.Provider>
   );
 };
 

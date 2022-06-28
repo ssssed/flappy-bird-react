@@ -1,0 +1,22 @@
+.score-table {
+  margin: 0 auto;
+  width: 80%;
+}
+
+.score-table__content {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.score-table__title {
+  text-align: center;
+}
+
+.score-table__description {
+  margin: 0 0 10px;
+}
+
+.score-table__score {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,6 +1,6 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt');
-const { User } = require('../models/models');
+const { User, UserInfo } = require('../models/models');
 const jsonwebtoken = require('jsonwebtoken');
 
 const generateJwt = (id, email) =>
@@ -20,6 +20,11 @@ class UserController {
       );
     const hashPassword = await bcrypt.hash(password, 5);
     const user = await User.create({ email, password: hashPassword });
+    await UserInfo.create({
+      name: user.email,
+      scores: [],
+      userId: user.id,
+    });
     const jwt = generateJwt(user.id, user.email);
     return res.json({ jwt });
   }
@@ -31,14 +36,33 @@ class UserController {
     let comparePassword = bcrypt.compareSync(password, user.password);
     if (!comparePassword)
       return next(ApiError.internal('Указан неверный пароль'));
+    const userId = user.id;
     const token = generateJwt(user.id, user.email);
-    return res.json({ token });
+    return res.json({ token, userId });
   }
 
   async check(req, res) {
-    console.log(req);
     const token = generateJwt(req.user.id, req.user.email);
     return res.json(token);
+  }
+
+  async getAllScores(req, res) {
+    const users = await UserInfo.findAll();
+    return res.json(users);
+  }
+
+  async sendScore(req, res) {
+    /*
+      запрос на обновление данных пользователя 
+    */
+  }
+
+  async getUserInfoById(req, res) {
+    const { id } = req.params;
+    const user = await UserInfo.findOne({
+      where: { userId: id },
+    });
+    return res.json(user);
   }
 }
 

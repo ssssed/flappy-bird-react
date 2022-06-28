@@ -5,15 +5,14 @@ import logo from '../images/bird.png';
 
 const Header = ({ isLogin, handleLogout }) => {
   const location = useLocation();
-
+  const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
-
   const navToMain = () => navigate('/');
   const navToManagment = () => navigate('/managment');
   const navToRegister = () => navigate('/register');
   const navToLogin = () => navigate('/login');
   const navToBestScore = () => navigate('/best-score');
-  const navToProfile = () => navigate('/profile');
+  const navToProfile = () => navigate(`/profile/${userId}`);
 
   return (
     <header className='header'>
