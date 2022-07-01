@@ -10,7 +10,7 @@ const ScoreTable = () => {
       .then((res) => setUsers(res.data))
       .catch((err) => console.error(err));
   }, []);
-
+  console.log(users);
   return (
     <div className='score-table'>
       <div className='score-table__content'>
@@ -20,11 +20,11 @@ const ScoreTable = () => {
             <span className='score-table__name'>Имя</span>
             <span className='score-table__name'>Лучшая попытка</span>
           </div>
-          {users.map(({ name, score = [0] }, index) => (
+          {users.map((item, index) => (
             <Score
               key={index}
-              name={name.split('@')[0]}
-              score={Math.max(...score) || 0}
+              name={item.email.split('@')[0]}
+              score={Math.max(...item.scores) || 0}
             />
           ))}
         </div>

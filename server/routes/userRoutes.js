@@ -9,6 +9,6 @@ router.get('/auth', authMiddleware, UserController.check);
 
 router.get('/scores', UserController.getAllScores);
 router.get('/:id', UserController.getUserInfoById);
-router.post('/score', UserController.getAllScores);
+router.put('/score', UserController.sendScore);
 
 module.exports = router;

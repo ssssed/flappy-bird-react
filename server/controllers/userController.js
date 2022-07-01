@@ -1,6 +1,6 @@
 const ApiError = require('../error/ApiError');
 const bcrypt = require('bcrypt');
-const { User, UserInfo } = require('../models/models');
+const { User } = require('../models/models');
 const jsonwebtoken = require('jsonwebtoken');
 
 const generateJwt = (id, email) =>
@@ -19,11 +19,10 @@ class UserController {
         ApiError.badRequest('Пользователь с таким email уже существует')
       );
     const hashPassword = await bcrypt.hash(password, 5);
-    const user = await User.create({ email, password: hashPassword });
-    await UserInfo.create({
-      name: user.email,
-      scores: [],
-      userId: user.id,
+    const user = await User.create({
+      email,
+      password: hashPassword,
+      scores: [0],
     });
     const jwt = generateJwt(user.id, user.email);
     return res.json({ jwt });
@@ -47,20 +46,23 @@ class UserController {
   }
 
   async getAllScores(req, res) {
-    const users = await UserInfo.findAll();
+    const users = await User.findAll();
     return res.json(users);
   }
 
   async sendScore(req, res) {
-    /*
-      запрос на обновление данных пользователя 
-    */
+    const { scores, id } = req.body;
+    let user = await User.findOne({ where: { id } });
+    user.update({
+      ['scores']: [...user.scores, ...scores],
+    });
+    return res.json(user);
   }
 
   async getUserInfoById(req, res) {
     const { id } = req.params;
-    const user = await UserInfo.findOne({
-      where: { userId: id },
+    const user = await User.findOne({
+      where: { id },
     });
     return res.json(user);
   }
