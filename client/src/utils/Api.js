@@ -11,9 +11,7 @@ export const getUserInfoById = (id) =>
 export const updateUserScore = (id, scores) =>
   axios
     .put(`${baseUrl}/user/score`, {
-      body: {
-        id: id,
-        scores: scores,
-      },
+      id: id,
+      scores: scores,
     })
     .catch((err) => console.error(err));

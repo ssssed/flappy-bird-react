@@ -7,6 +7,7 @@ import pipeNorthImage from '../images/pipeNorth.png';
 import pipeSouthImage from '../images/pipeSouth.png';
 import jumpSound from '../sounds/fly.mp3';
 import scoreSound from '../sounds/score.mp3';
+import { updateUserScore } from '../utils/Api';
 
 const canvasWidth = 288;
 const canvasHeight = 512;
@@ -86,6 +87,7 @@ const FlappyBird = ({ isOpen, setOpen, setLastScore }) => {
           paused = true;
           setLastScore(score);
           setOpen(true);
+          updateUserScore(localStorage.getItem('userId'), [score]);
         }
 
         if (pipes[i].x === 0) {
