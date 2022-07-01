@@ -11,7 +11,8 @@ const Profile = ({ login, handleLogout }) => {
       .then((res) => res.data.scores.length != 0 && setUser(res.data))
       .catch((err) => console.error(err));
   }, [id]);
-  let scores = user.scores.sort((a, b) => a - b);
+  let scores = user.scores;
+  console.log(scores);
   return (
     <div className='profile'>
       <h2 className='profile__name'>{login}</h2>
@@ -20,9 +21,15 @@ const Profile = ({ login, handleLogout }) => {
           Лучшая попытка: {Math.max(...scores)}
         </li>
         <span className='profile__text'>Последние 3 попытки</span>
-        <li className='profile__score'>Счет: {scores[2] || 0}</li>
-        <li className='profile__score'>Счет: {scores[1] || 0}</li>
-        <li className='profile__score'>Счет: {scores[0] || 0}</li>
+        <li className='profile__score'>
+          Счет: {scores[scores.length - 3] || 0}
+        </li>
+        <li className='profile__score'>
+          Счет: {scores[scores.length - 2] || 0}
+        </li>
+        <li className='profile__score'>
+          Счет: {scores[scores.length - 1] || 0}
+        </li>
       </ul>
       <button className='profile__logout' onClick={handleLogout}>
         Выйти из профиля

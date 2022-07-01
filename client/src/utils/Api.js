@@ -7,3 +7,13 @@ export const getAllScores = () => {
 
 export const getUserInfoById = (id) =>
   axios.get(`${baseUrl}/user/${id}`).catch((err) => console.error(err));
+
+export const updateUserScore = (id, scores) =>
+  axios
+    .put(`${baseUrl}/user/score`, {
+      body: {
+        id: id,
+        scores: scores,
+      },
+    })
+    .catch((err) => console.error(err));
