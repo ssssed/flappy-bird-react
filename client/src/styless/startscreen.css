@@ -1,0 +1,30 @@
+.start-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-screen__container {
+  width: 500px;
+  margin: 100px auto;
+}
+
+.start-screen__title {
+  text-align: center;
+}
+
+.start-screem__link {
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.start-screen__button {
+  color: white;
+  background-color: black;
+  border: 1px solid white;
+  padding: 15px;
+  display: block;
+  margin: 0 auto;
+  cursor: pointer;
+}

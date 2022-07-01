@@ -1,0 +1,9 @@
+canvas {
+  border-radius: 10px;
+}
+
+.canvas-game {
+  padding: 100px 0 0;
+  margin: 0 auto;
+  width: 288px;
+}

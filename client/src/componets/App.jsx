@@ -10,12 +10,14 @@ import ScoreTable from './ScoreTable';
 import Main from './Main';
 import ProtectRouter from '../hoc/ProtectRouter';
 import Profile from './Profile';
-import { UserContext } from '../context/userContext';
+import Game from './Game';
+import GameOver from './GameOver';
 
 const App = () => {
   const [isLogin, setLogin] = useState(false);
   const [userId, setUserId] = useState(NaN);
-  const [currentUser, setCurrentUser] = useState({});
+  const [isOpen, setOpen] = useState(false);
+  const [lastScore, setLastScore] = useState(0);
   const login = localStorage.getItem('login') || 'Player';
   const navigate = useNavigate();
   const storageToken = localStorage.getItem('token');
@@ -36,31 +38,45 @@ const App = () => {
     navigate('/login');
   };
   return (
-    <UserContext.Provider value={currentUser}>
-      <div className='page'>
-        <Header isLogin={isLogin} userId={userId} handleLogout={handleLogout} />
-        <Routes>
-          <Route
-            exact
-            path='/'
-            element={<ProtectRouter isLogin={isLogin} children={<Main />} />}
-          />
-          <Route
-            path='/profile/:id'
-            element={
-              <ProtectRouter
-                isLogin={isLogin}
-                children={<Profile login={login} handleLogout={handleLogout} />}
-              />
-            }
-          />
-          <Route path='/login' element={<Login setUserId={setUserId} />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/managment' element={<Managment />} />
-          <Route path='/best-score' element={<ScoreTable />} />
-        </Routes>
-      </div>
-    </UserContext.Provider>
+    <div className='page'>
+      <GameOver isOpen={isOpen} score={lastScore} setOpen={setOpen} />
+      <Header isLogin={isLogin} userId={userId} handleLogout={handleLogout} />
+      <Routes>
+        <Route
+          exact
+          path='/'
+          element={<ProtectRouter isLogin={isLogin} children={<Main />} />}
+        />
+        <Route
+          path='/game'
+          element={
+            <ProtectRouter
+              isLogin={isLogin}
+              children={
+                <Game
+                  setOpen={setOpen}
+                  isOpen={isOpen}
+                  setLastScore={setLastScore}
+                />
+              }
+            />
+          }
+        />
+        <Route
+          path='/profile/:id'
+          element={
+            <ProtectRouter
+              isLogin={isLogin}
+              children={<Profile login={login} handleLogout={handleLogout} />}
+            />
+          }
+        />
+        <Route path='/login' element={<Login setUserId={setUserId} />} />
+        <Route path='/register' element={<Register />} />
+        <Route path='/managment' element={<Managment />} />
+        <Route path='/best-score' element={<ScoreTable />} />
+      </Routes>
+    </div>
   );
 };
 

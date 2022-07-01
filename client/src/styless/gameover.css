@@ -1,0 +1,33 @@
+.hidden {
+  display: none;
+  visibility: hidden;
+}
+
+.gameover {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 40%;
+  margin: 0 auto;
+  background-color: white;
+  color: black;
+  width: 300px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.gameover__title,
+.gameover__score {
+  text-align: center;
+}
+
+.gameover__reset {
+  width: 100%;
+  height: 40px;
+  color: black;
+  background-color: white;
+  border: 1px solid black;
+  cursor: pointer;
+}
