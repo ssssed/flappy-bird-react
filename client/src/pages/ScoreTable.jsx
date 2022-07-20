@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Score from './Score';
-import '../styless/scoreTable.css';
+import Score from '../components/Score';
+import '../styless/scoreTable.scss';
 import { getAllScores } from '../utils/Api';
 
 const ScoreTable = () => {

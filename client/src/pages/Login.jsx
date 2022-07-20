@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import '../styless/login.css';
-import { register } from '../utils/Auth';
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../styless/login.scss';
+import { singin } from '../utils/Auth';
 
-const Register = () => {
+const Login = () => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -12,14 +12,19 @@ const Register = () => {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-    localStorage.setItem('login', login.split('@')[0]);
-    register(login, password).then((res) => navigate('/login'));
+    singin(login, password).then((res) => {
+      localStorage.setItem('token', res.data.token);
+      localStorage.setItem('login', login.split('@')[0]);
+      localStorage.setItem('userId', res.data.userId);
+      setLogin(true);
+      navigate('/');
+    });
   };
 
   return (
-    <div className='login register'>
+    <div className='login'>
       <form className='form' onSubmit={handleSubmitForm}>
-        <h2 className='form__title'>Регистрация</h2>
+        <h2 className='form__title'>Вход</h2>
         <input
           type='text'
           onChange={handleLoginChange}
@@ -35,19 +40,11 @@ const Register = () => {
           className='form__input'
         />
         <button type='submit' className='form__submit'>
-          Зарегистрироваться
+          Войти
         </button>
-        <p className='form__text'>
-          Уже зарегистрированны?{' '}
-          {
-            <Link to='/login' className='form__link'>
-              Войти
-            </Link>
-          }
-        </p>
       </form>
     </div>
   );
 };
 
-export default Register;
+export default Login;

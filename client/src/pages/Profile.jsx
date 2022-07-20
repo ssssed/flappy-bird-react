@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import '../styless/profile.css';
+import '../styless/profile.scss';
 import { getUserInfoById } from '../utils/Api';
 
 const Profile = ({ login, handleLogout }) => {

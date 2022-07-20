@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import '../styless/header.css';
-import logo from '../images/bird.png';
+import '../../styless/header.scss';
+import logo from '../../assets/bird.png';
 
 const Header = ({ isLogin, handleLogout }) => {
   const location = useLocation();

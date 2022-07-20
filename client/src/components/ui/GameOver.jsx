@@ -1,23 +1,26 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../styless/gameover.css';
+import { observer } from 'mobx-react-lite';
+import appstore from '../../store/appstore';
+import '../../styless/gameover.scss';
 
-const GameOver = ({ isOpen, score, setOpen }) => {
+const GameOver = observer(() => {
   const navigate = useNavigate();
   const handleRestartGame = () => {
-    setOpen(false);
     navigate('/');
-    window.location.reload();
+    appstore.close();
+    appstore.toggleStart(false);
+    // window.location.reload();
   };
   return (
-    <div className={`gameover ${isOpen ? '' : 'hidden'}`}>
+    <div className={`gameover ${appstore.isOpen ? '' : 'hidden'}`}>
       <h2 className='gameover__title'>Вы проиграли</h2>
-      <p className='gameover__score'>{`Ваш счет: ${score}`}</p>
+      <p className='gameover__score'>{`Ваш счет: ${appstore.lastScore}`}</p>
       <button onClick={handleRestartGame} className='gameover__reset'>
         Начать сначала!
       </button>
     </div>
   );
-};
+});
 
 export default GameOver;

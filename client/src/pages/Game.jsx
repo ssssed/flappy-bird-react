@@ -1,12 +1,14 @@
 import React, { useRef, useEffect } from 'react';
-import '../styless/game.css';
-import bgImage from '../images/bg.png';
-import fgImage from '../images/fg.png';
-import birdImage from '../images/bird.png';
-import pipeNorthImage from '../images/pipeNorth.png';
-import pipeSouthImage from '../images/pipeSouth.png';
-import jumpSound from '../sounds/fly.mp3';
-import scoreSound from '../sounds/score.mp3';
+import { observer } from 'mobx-react-lite';
+import appstore from '../store/appstore';
+import '../styless/game.scss';
+import bgImage from '../assets/bg.png';
+import fgImage from '../assets/fg.png';
+import birdImage from '../assets/bird.png';
+import pipeNorthImage from '../assets/pipeNorth.png';
+import pipeSouthImage from '../assets/pipeSouth.png';
+import jumpSound from '../assets/fly.mp3';
+import scoreSound from '../assets/score.mp3';
 import { updateUserScore } from '../utils/Api';
 
 const canvasWidth = 288;
@@ -15,14 +17,7 @@ const canvasHeight = 512;
 let birdX = 30;
 let birdY = 150;
 
-const gravity = 1;
-const jump = 25;
-const gap = 120;
-let pipes = [];
-pipes.push({ x: canvasWidth, y: -100 });
-let score = 0;
-
-const FlappyBird = ({ isOpen, setOpen, setLastScore }) => {
+const FlappyBird = observer(() => {
   const canvasRef = useRef(null);
   const bgRef = useRef(null);
   const fgRef = useRef(null);
@@ -35,6 +30,13 @@ const FlappyBird = ({ isOpen, setOpen, setLastScore }) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
     let paused = false;
+    let pipes = [{ x: canvasWidth, y: -100 }];
+    birdX = 30;
+    birdY = 150;
+    const gap = 120;
+    const gravity = 0.9;
+    let score = 0;
+    let jump = 25;
 
     const bg = bgRef.current;
     const pipeNorth = pipeNorthRef.current;
@@ -45,9 +47,13 @@ const FlappyBird = ({ isOpen, setOpen, setLastScore }) => {
     const jumpAudio = jumpSoundRef.current;
     const scoreAudio = scoreSoundRef.current;
 
-    const moveUp = () => {
-      jumpAudio.play();
-      birdY -= jump;
+    const moveUp = (evt) => {
+      console.log(window);
+      if (evt.key == ' ' || evt.type == 'click') {
+        jumpAudio.play();
+        birdY += 1;
+        birdY *= 0.9;
+      }
     };
 
     const togglePause = (e) => {
@@ -84,9 +90,9 @@ const FlappyBird = ({ isOpen, setOpen, setLastScore }) => {
               birdY + bird.height >= pipes[i].y + pipeNorth.height + gap)) ||
           birdY + bird.height >= canvasHeight - fg.height
         ) {
+          appstore.setLastScore(score);
+          appstore.open();
           paused = true;
-          setLastScore(score);
-          setOpen(true);
           updateUserScore(localStorage.getItem('userId'), [score]);
         }
 
@@ -112,7 +118,12 @@ const FlappyBird = ({ isOpen, setOpen, setLastScore }) => {
     };
 
     render();
-  }, [isOpen]);
+    return () => {
+      document.removeEventListener('click', moveUp);
+      document.removeEventListener('keydown', moveUp);
+      document.removeEventListener('keydown', togglePause);
+    };
+  }, [appstore.isStart]);
 
   return (
     <div className='canvas-game'>
@@ -130,6 +141,6 @@ const FlappyBird = ({ isOpen, setOpen, setLastScore }) => {
       <audio ref={scoreSoundRef} src={scoreSound} hidden />
     </div>
   );
-};
+});
 
 export default FlappyBird;

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styless/managment.css';
+import '../styless/managment.scss';
 
 const Managment = () => {
   return (

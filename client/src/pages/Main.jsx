@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../styless/startscreen.css';
+import { observer } from 'mobx-react-lite';
+import appstore from '../store/appstore';
+import '../styless/startscreen.scss';
 
-const Main = () => {
+const Main = observer(() => {
   const navigate = useNavigate();
-  const handleStartGame = () => navigate('/game');
+  const handleStartGame = () => {
+    navigate('/game');
+    appstore.toggleStart(true);
+  };
   return (
     <div className='start-screen'>
       <div className='start-screen__container'>
@@ -21,6 +26,6 @@ const Main = () => {
       </div>
     </div>
   );
-};
+});
 
 export default Main;
