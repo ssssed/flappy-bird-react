@@ -1,17 +1,18 @@
+import React from 'react';
 import { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import { check } from '../utils/Auth';
-import './App.css';
-import Header from './Header';
-import Login from './Login';
-import Register from './Register';
-import Managment from './Managment';
-import ScoreTable from './ScoreTable';
-import Main from './Main';
+import Header from './ui/Header';
+import Login from '../pages/Login';
+import Register from '../pages/Register';
+import Managment from '../pages/Managment';
+import ScoreTable from '../pages/ScoreTable';
+import Main from '../pages/Main';
 import ProtectRouter from '../hoc/ProtectRouter';
-import Profile from './Profile';
-import Game from './Game';
-import GameOver from './GameOver';
+import Profile from '../pages/Profile';
+import Game from '../pages/Game';
+import GameOver from './ui/GameOver';
+import appstore from '../store/appstore';
 
 const App = () => {
   const [isLogin, setLogin] = useState(false);
@@ -39,7 +40,7 @@ const App = () => {
   };
   return (
     <div className='page'>
-      <GameOver isOpen={isOpen} score={lastScore} setOpen={setOpen} />
+      <GameOver />
       <Header isLogin={isLogin} userId={userId} handleLogout={handleLogout} />
       <Routes>
         <Route
