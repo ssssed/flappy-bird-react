@@ -13,7 +13,10 @@ import { updateUserScore } from '../utils/Api';
 
 const canvasWidth = 288;
 const canvasHeight = 512;
-
+const gap = 120;
+const gravity = 1.5;
+let score = 0;
+let jump = 25;
 let birdX = 30;
 let birdY = 150;
 
@@ -29,30 +32,25 @@ const FlappyBird = observer(() => {
   useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    let paused = false;
-    let pipes = [{ x: canvasWidth, y: -100 }];
-    birdX = 30;
-    birdY = 150;
-    const gap = 120;
-    const gravity = 0.9;
-    let score = 0;
-    let jump = 25;
-
     const bg = bgRef.current;
     const pipeNorth = pipeNorthRef.current;
     const pipeSouth = pipeSouthRef.current;
     const fg = fgRef.current;
     const bird = birdRef.current;
 
+    let paused = false;
+    let pipes = [{ x: canvasWidth, y: -100 }];
+    birdX = 30;
+    birdY = 150;
+    jump = 25;
+
     const jumpAudio = jumpSoundRef.current;
     const scoreAudio = scoreSoundRef.current;
 
     const moveUp = (evt) => {
-      console.log(window);
       if (evt.key == ' ' || evt.type == 'click') {
         jumpAudio.play();
-        birdY += 1;
-        birdY *= 0.9;
+        birdY -= jump;
       }
     };
 
