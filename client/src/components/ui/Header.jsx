@@ -2,8 +2,10 @@ import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../../styless/header.scss';
 import logo from '../../assets/bird.png';
+import appstore from '../../store/appstore';
+import { observer } from 'mobx-react-lite';
 
-const Header = ({ isLogin, handleLogout }) => {
+const Header = observer(({ handleLogout }) => {
   const location = useLocation();
   const userId = localStorage.getItem('userId');
   const navigate = useNavigate();
@@ -20,7 +22,7 @@ const Header = ({ isLogin, handleLogout }) => {
         <img src={logo} alt='logo' className='header__img' />
         <span
           className='header__nav'
-          onClick={isLogin ? navToMain : navToLogin}
+          onClick={appstore.isLogin ? navToMain : navToLogin}
         >
           Начать играть
         </span>
@@ -32,7 +34,7 @@ const Header = ({ isLogin, handleLogout }) => {
         </span>
         <span
           className='header__nav'
-          onClick={isLogin ? navToProfile : navToLogin}
+          onClick={appstore.isLogin ? navToProfile : navToLogin}
         >
           Профиль
         </span>
@@ -40,14 +42,14 @@ const Header = ({ isLogin, handleLogout }) => {
       <button
         className='header__button'
         onClick={
-          isLogin
+          appstore.isLogin
             ? handleLogout
             : location.pathname == '/login'
             ? navToRegister
             : navToLogin
         }
       >
-        {isLogin
+        {appstore.isLogin
           ? 'Выйти'
           : location.pathname == '/login'
           ? 'Регистрация'
@@ -55,6 +57,6 @@ const Header = ({ isLogin, handleLogout }) => {
       </button>
     </header>
   );
-};
+});
 
 export default Header;

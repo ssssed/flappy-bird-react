@@ -1,9 +1,11 @@
+import { observer } from 'mobx-react-lite';
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
+import appstore from '../store/appstore';
 import '../styless/profile.scss';
 import { getUserInfoById } from '../utils/Api';
 
-const Profile = ({ login, handleLogout }) => {
+const Profile = observer(({ handleLogout }) => {
   const [user, setUser] = useState({ scores: [0, 0, 0, 0] });
   const { id } = useParams();
   useEffect(() => {
@@ -15,7 +17,7 @@ const Profile = ({ login, handleLogout }) => {
   console.log(scores);
   return (
     <div className='profile'>
-      <h2 className='profile__name'>{login}</h2>
+      <h2 className='profile__name'>{appstore.login}</h2>
       <ul className='profile__scores'>
         <li className='profile__score'>
           Лучшая попытка: {Math.max(...scores)}
@@ -36,6 +38,6 @@ const Profile = ({ login, handleLogout }) => {
       </button>
     </div>
   );
-};
+});
 
 export default Profile;

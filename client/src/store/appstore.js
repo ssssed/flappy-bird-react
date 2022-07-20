@@ -12,12 +12,8 @@ class AppStore {
     makeAutoObservable(this);
   }
 
-  login() {
-    this.isLogin = true;
-  }
-
-  logout() {
-    this.isLogin = false;
+  toogleLogin(status) {
+    this.isLogin = status;
   }
 
   setUserId(id) {

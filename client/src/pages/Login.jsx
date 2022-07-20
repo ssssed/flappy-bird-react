@@ -1,9 +1,11 @@
-import React, { useState, useContext } from 'react';
+import { observer } from 'mobx-react-lite';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import appstore from '../store/appstore';
 import '../styless/login.scss';
 import { singin } from '../utils/Auth';
 
-const Login = () => {
+const Login = observer(() => {
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -14,9 +16,9 @@ const Login = () => {
     e.preventDefault();
     singin(login, password).then((res) => {
       localStorage.setItem('token', res.data.token);
-      localStorage.setItem('login', login.split('@')[0]);
-      localStorage.setItem('userId', res.data.userId);
-      setLogin(true);
+      appstore.setNickName(login.split('@')[0]);
+      appstore.setUserId(res.data.userId);
+      appstore.toogleLogin(true);
       navigate('/');
     });
   };
@@ -45,6 +47,6 @@ const Login = () => {
       </form>
     </div>
   );
-};
+});
 
 export default Login;
