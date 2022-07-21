@@ -34,23 +34,16 @@ const Game = observer(() => {
   useEffect(() => {
     const cvs = canvasRef.current;
     const ctx = cvs.getContext('2d');
-    // ЗАДНИЙ ФОН
     const bgI = bgRef.current;
-    // ПТИЦА
     const birdI = birdRef.current;
-    // ПТИЦА СКИН 1
     let game_skin = birdI;
-    // ТРУБА ВЕРХНЯЯ
     const pipeTopI = topPipeRef.current;
-    // ТРУБА НИЖНЯЯ
     const bottomPipeI = bottomPipeRef.current;
     let angle = 0;
     let frame = 50;
     window.GAME_SCORE = 0;
     let pipesArray = [];
-    // ЗВУК СМЕРТИ
     let deathSoundMP = deathSoundRef.current;
-    // ЗВУК ПОИНТА
     let scoreSoundMP = scoreSoundRef.current;
 
     const bird = new Bird(
@@ -101,7 +94,7 @@ const Game = observer(() => {
         setIsPaused(true);
         appstore.setLastScore(window.GAME_SCORE);
         appstore.open();
-        updateUserScore(localStorage.getItem('userId'), [appstore.lastScore]);
+        updateUserScore(appstore.userId, [appstore.lastScore]);
         return;
       }
       if (!isPaused) requestAnimationFrame(render);

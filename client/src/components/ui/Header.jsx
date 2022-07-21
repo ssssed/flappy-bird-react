@@ -14,7 +14,7 @@ const Header = observer(({ handleLogout }) => {
   const navToRegister = () => navigate('/register');
   const navToLogin = () => navigate('/login');
   const navToBestScore = () => navigate('/best-score');
-  const navToProfile = () => navigate(`/profile/${userId}`);
+  const navToProfile = () => navigate(`/profile/${appstore.userId}`);
 
   return (
     <header className='header'>
