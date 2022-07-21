@@ -23,14 +23,13 @@ const App = observer(() => {
       check(storageToken)
         .then((res) => {
           res.data && appstore.toogleLogin(true);
+          appstore.setUserId(res.data.id);
           navigate('/');
         })
         .catch((err) => appstore.toogleLogin(false));
   }, [appstore.isLogin, storageToken]);
   const handleLogout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('login');
-    localStorage.removeItem('userId');
     appstore.toogleLogin(false);
     navigate('/login');
   };

@@ -42,7 +42,7 @@ class UserController {
 
   async check(req, res) {
     const token = generateJwt(req.user.id, req.user.email);
-    return res.json(token);
+    return res.json({ token, id: req.user.id });
   }
 
   async getAllScores(req, res) {
