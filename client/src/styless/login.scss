@@ -1,9 +1,16 @@
 .form {
-  margin: 10% auto 0;
-  width: 500px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  min-height: 470px;
+  max-width: 350px;
+  width: 100%;
+  padding: 25px;
+  gap: 10px;
 }
 
 .form__title {
@@ -26,6 +33,14 @@
   cursor: pointer;
 }
 
+.form__submit_disable {
+  pointer-events: none;
+  background-color: gray;
+  margin: 50px 0 0;
+  height: 50px;
+  cursor: none;
+}
+
 .form__text {
   color: white;
   text-align: center;
@@ -39,4 +54,8 @@
 
 .login {
   background-color: black;
+}
+
+.form__error {
+  min-height: 14px;
 }
